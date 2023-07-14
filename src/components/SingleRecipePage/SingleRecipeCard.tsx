@@ -16,8 +16,8 @@ const SingleRecipeCard: React.FC = () => {
   }
 
   return (
-    <section className="recipe-card">
-      <h3 className="description__beear">{recipe.name}</h3>
+    <section className="single__recipe-card">
+      <h1 className="description__beear">{recipe.name}</h1>
       <div className="img__container">
         <img className="beers__img" src={recipe.image_url} alt={recipe.name} />
       </div>

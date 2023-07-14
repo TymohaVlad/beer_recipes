@@ -9,6 +9,13 @@
     padding: 10px;
     border-radius: 7px;
 }
+.single__recipe-card{
+    max-width: 60%;
+    margin: auto;
+    border: solid 1px;
+    padding: 15px;
+    border-radius: 8px;
+}
 .img__container{
     display: flex;
     justify-content: center;

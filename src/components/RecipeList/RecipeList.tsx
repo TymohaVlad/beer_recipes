@@ -35,7 +35,11 @@ const RecipeList: React.FC = () => {
       setCurrentPage((prevPage) => prevPage + 1);
       fetchMoreRecipes(currentPage + 1);
     }
-  }, [recipes]);
+  }, []);
+
+  const handleCardClick = (recipeId: number) => {
+    navigate(`/recipes/${recipeId}`);
+  };
 
   const handleRightClick = (recipeId: number) => (event: React.MouseEvent) => {
     event.preventDefault();
@@ -51,17 +55,6 @@ const RecipeList: React.FC = () => {
     }
   };
 
-  const handleLeftClick = (recipeId: number) => {
-    navigate(`/recipes/${recipeId}`);
-  };
-
-  const handleDeleteClick = (recipeId: number) => {
-    removeRecipe(recipeId);
-    setSelectedRecipes((prevSelectedRecipes) =>
-      prevSelectedRecipes.filter((id) => id !== recipeId)
-    );
-  };
-
   const handleDeleteSelected = () => {
     selectedRecipes.forEach((recipeId) => {
       removeRecipe(recipeId);
@@ -70,33 +63,29 @@ const RecipeList: React.FC = () => {
   };
 
   return (
-    <main className='card__container'>
+    <main className="card__container">
       {recipes.slice(0, 15).map((recipe: Recipe) => (
         <section
           key={recipe.id}
           className={`recipe-card ${
             selectedRecipes.includes(recipe.id) ? 'selected' : ''
           }`}
+          onClick={() => handleCardClick(recipe.id)}
           onContextMenu={handleRightClick(recipe.id)}
         >
-          <img className='beers__img' src={recipe.image_url} alt={recipe.name} />
+          <img
+            className="beers__img"
+            src={recipe.image_url}
+            alt={recipe.name}
+          />
           <h3>{recipe.name}</h3>
           <h4>{recipe.first_brewed}</h4>
           <h4>{recipe.tagline}</h4>
           <p>{recipe.description}</p>
-        
-          {!selectedRecipes.includes(recipe.id) && (
-            <button
-              className='view__btn'
-              onClick={() => handleLeftClick(recipe.id)}
-            >
-              View details
-            </button>
-          )}
         </section>
       ))}
       {selectedRecipes.length > 0 && (
-        <button className='delete-selected__btn' onClick={handleDeleteSelected}>
+        <button className="delete-selected__btn" onClick={handleDeleteSelected}>
           Delete Selected
         </button>
       )}
