@@ -35,7 +35,7 @@ const RecipeList: React.FC = () => {
       setCurrentPage((prevPage) => prevPage + 1);
       fetchMoreRecipes(currentPage + 1);
     }
-  }, []);
+  }, [recipes]);
 
   const handleCardClick = (recipeId: number) => {
     navigate(`/recipes/${recipeId}`);
@@ -81,7 +81,6 @@ const RecipeList: React.FC = () => {
           <h3>{recipe.name}</h3>
           <h4>{recipe.first_brewed}</h4>
           <h4>{recipe.tagline}</h4>
-          <p>{recipe.description}</p>
         </section>
       ))}
       {selectedRecipes.length > 0 && (

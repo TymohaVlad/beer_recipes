@@ -2,19 +2,30 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     row-gap: 50px;
+    background: #e6e4e4;
+    padding: 3% 0 3% 0;
 }
 .recipe-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     max-width: 300px;
     margin: auto;
     padding: 10px;
     border-radius: 7px;
+    border: solid 1px rgb(140, 188, 243);
+    background: #fff;
 }
 .single__recipe-card{
-    max-width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 50%;
     margin: auto;
     border: solid 1px;
     padding: 15px;
     border-radius: 8px;
+    background: #f3f7be;
 }
 .img__container{
     display: flex;
@@ -23,10 +34,13 @@
 .beers__img{
     max-height: 300px;
 }
-.delete__btn{
-    width: 80px;
-    height: 30px;
-    background: #ff0000;
+.delete-selected__btn{
+    position: fixed;
+    left: 1%;
+    top: 3%;
+    width: 113px;
+    height: 40px;
+    background: #f38f8f;
     border: none;
     border-radius: 7px;
     font-size: 18px;
