@@ -1,0 +1,41 @@
+.card__container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 50px;
+}
+.recipe-card{
+    max-width: 300px;
+    margin: auto;
+    padding: 10px;
+    border-radius: 7px;
+}
+.img__container{
+    display: flex;
+    justify-content: center;
+}
+.beers__img{
+    max-height: 300px;
+}
+.delete__btn{
+    width: 80px;
+    height: 30px;
+    background: #ff0000;
+    border: none;
+    border-radius: 7px;
+    font-size: 18px;
+    color: #fff ;
+}
+.view__btn{
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 7px;
+    background: #90ee90;
+    font-size: 16px;
+}
+.description__beear{
+    font-size: 20px;
+}
+.selected{
+    background: rgb(199, 245, 199);
+}
