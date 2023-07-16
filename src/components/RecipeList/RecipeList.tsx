@@ -27,7 +27,7 @@ const RecipeList: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loadindIndicator.current && recipes.length === 0) {
+    if (!loadindIndicator.current && recipes.length < 15 ) {
       loadindIndicator.current = true;
       const page = currentPage + 1;
       setCurrentPage(() => page);
