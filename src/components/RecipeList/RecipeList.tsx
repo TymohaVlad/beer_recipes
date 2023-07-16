@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useStore from '../../store/store';
-
 import './RecipeList.css';
 
 interface Recipe {
@@ -18,22 +17,23 @@ interface Recipe {
 
 const RecipeList: React.FC = () => {
   const [selectedRecipes, setSelectedRecipes] = useState<number[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
+  const loadindIndicator = useRef(false);
+
   const recipes = useStore((state) => state.recipes);
-  const loadRecipes = useStore((state) => state.loadRecipes);
-  const fetchMoreRecipes = useStore((state) => state.fetchMoreRecipes);
-  const removeRecipe = useStore((state) => state.removeRecipe);
+  const fetchRecipes = useStore((state) => state.fetchRecipes);
+  const removeRecipes = useStore((state) => state.removeRecipes);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    loadRecipes();
-  }, []);
-
-  useEffect(() => {
-    if (recipes.length === 0) {
-      setCurrentPage((prevPage) => prevPage + 1);
-      fetchMoreRecipes(currentPage + 1);
+    if (!loadindIndicator.current && recipes.length === 0) {
+      loadindIndicator.current = true;
+      const page = currentPage + 1;
+      setCurrentPage(() => page);
+      fetchRecipes(page).finally(() => {
+        loadindIndicator.current = false;
+      });
     }
   }, [recipes]);
 
@@ -47,18 +47,17 @@ const RecipeList: React.FC = () => {
       setSelectedRecipes((prevSelectedRecipes) =>
         prevSelectedRecipes.filter((id) => id !== recipeId)
       );
-    } else {
-      setSelectedRecipes((prevSelectedRecipes) => [
-        ...prevSelectedRecipes,
-        recipeId,
-      ]);
+      return;
     }
+
+    setSelectedRecipes((prevSelectedRecipes) => [
+      ...prevSelectedRecipes,
+      recipeId,
+    ]);
   };
 
   const handleDeleteSelected = () => {
-    selectedRecipes.forEach((recipeId) => {
-      removeRecipe(recipeId);
-    });
+    removeRecipes(new Set(selectedRecipes));
     setSelectedRecipes([]);
   };
 

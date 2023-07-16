@@ -20,10 +20,9 @@ interface Recipe {
 
 interface Store {
   recipes: Recipe[];
-  loadRecipes: () => Promise<void>;
   addRecipe: (recipe: Recipe) => void;
-  removeRecipe: (recipeId: number) => void;
-  fetchMoreRecipes: (page: number) => Promise<void>;
+  removeRecipes: (recipeIds: Set<number>) => void;
+  fetchRecipes: (page: number) => Promise<void>;
 }
 
 const useStore = create<Store>((set) => ({
@@ -33,23 +32,15 @@ const useStore = create<Store>((set) => ({
     set((state) => ({ recipes: [...state.recipes, recipe] }));
   },
 
-  loadRecipes: async () => {
-    try {
-      const response = await fetch('https://api.punkapi.com/v2/beers?page=1');
-      const data = await response.json();
-      set({ recipes: data });
-    } catch (error) {
-      console.error('Error loading recipes:', error);
-    }
-  },
-
-  removeRecipe: (recipeId) => {
+  removeRecipes: (recipeIdsToDelete) => {
     set((state) => ({
-      recipes: state.recipes.filter((recipe) => recipe.id !== recipeId),
+      recipes: state.recipes.filter(
+        (recipe) => !recipeIdsToDelete.has(recipe.id)
+      ),
     }));
   },
 
-  fetchMoreRecipes: async (page) => {
+  fetchRecipes: async (page: number) => {
     try {
       const response = await fetch(
         `https://api.punkapi.com/v2/beers?page=${page}`
