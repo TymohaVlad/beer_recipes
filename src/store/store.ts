@@ -1,5 +1,7 @@
 import create from 'zustand';
 
+
+
 interface Recipe {
   id: number;
   name: string;
@@ -39,11 +41,11 @@ const useStore = create<Store>((set) => ({
       ),
     }));
   },
-
   fetchRecipes: async (page: number) => {
+    const host = process.env.REACT_APP_API_RECIPES
     try {
       const response = await fetch(
-        `https://api.punkapi.com/v2/beers?page=${page}`
+        `${host}/v2/beers?page=${page}`
       );
       const data = await response.json();
       set((state) => ({ recipes: [...state.recipes, ...data] }));
